@@ -1,4 +1,4 @@
-# explainable_ros [WIP]
+# explainable_ros
 
 This repository provides a ROS 2 package for generating explanations in autonomous robots based on log analysis using LLMs.
 
@@ -17,34 +17,30 @@ On the other hand, the high-level representation of the components that make up 
 ## Table of Contents
 
 1. [Installation](#installation)
-   - [Prerequisites](#prerequisites)
-   - [Installation Steps](#installation-steps)
 2. [Usage](#usage)
-   - [Local](#local)
-3. [Related Works](#related-works)
+3. [Demos](#demos)
+   - [LLM](#llm)
+4. [Related Works](#related-works)
    - [Other Software Projects](#other-software-projects)
    - [Related Datasets](#related-datasets)
    - [Papers](#papers)
-4. [Cite](#cite)
-5. [Acknowledgments](#acknowledgments)
+5. [Cite](#cite)
+6. [Acknowledgments](#acknowledgments)
 
 ## Installation
 
-Take into account that the examples shown in the usage section have been made using this [rosbag](https://doi.org/10.5281/zenodo.10896141).
-
 ### Prerequisites
 
-You must have llama_ros and CUDA Toolkit (llama_ros dependency) installed.
-
-### Installation Steps
+To run llama_ros with CUDA, first, you must install the [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit). Then, you can continue with the installation.
 
 ```shell
-cd ros2_ws/src
+cd ~/ros2_ws/src
+git clone https://github.com/mgonzs13/llama_ros.git
 git clone https://github.com/Dsobh/explainable_ros.git
-pip install -r explainable_ros/requirements.txt
-
-cd ../
-colcon build
+pip3 install -r llama_ros/requirements.txt
+cd ~/ros2_ws
+rosdep install --from-paths src --ignore-src -r -y
+colcon build --cmake-args -DGGML_CUDA=ON # add this for CUDA
 ```
 
 <!-- ### Docker [WIP]
@@ -85,7 +81,11 @@ Or you can use the explainability client:
 ros2 run explainable_ros explainability_client_node "What is happening?"
 ```
 
-## Demo
+## Demos
+
+Take into account that the examples shown in the usage section have been made using this [rosbag](https://doi.org/10.5281/zenodo.10896141).
+
+### LLM
 
 For the examples shown in this section we use the following models (available in llama_ros repository):
 
