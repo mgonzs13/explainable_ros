@@ -10,14 +10,15 @@ To enhance the robot's internal data, a VLM is used to process the images captur
 
 On the other hand, the high-level representation of the components that make up the developed system is shown in the following figure.
 
-![](./images/figures/ArchExplicability.png)
+<p align="center">
+  <img src="./images/figures/ArchExplicability.png" />
+</p>
 
 ## Table of Contents
 
 1. [Installation](#installation)
    - [Prerequisites](#prerequisites)
    - [Installation Steps](#installation-steps)
-   - [Docker](#docker-wip)
 2. [Usage](#usage)
    - [Local](#local)
 3. [Related Works](#related-works)
@@ -46,7 +47,7 @@ cd ../
 colcon build
 ```
 
-### Docker [WIP]
+<!-- ### Docker [WIP]
 
 You can also use docker. To do this you can compile the dockerfile found in the root of this repository or download the corresponding image from Dockerhub.
 
@@ -60,17 +61,9 @@ Run second container:
 
 ```shell
 docker exec -it <container_id> bash
-```
+``` -->
 
 ## Usage
-
-For the examples shown in this section we use the following models (available in llama_ros repository):
-
-- _Embbeding model_: bge-base-en-v1.5.yaml
-- _Reranker model_: jina-reranker
-- _Base model_: Qwen2
-
-### Local
 
 - Run the launch file with the emebedding, reranker and LLM models:
 
@@ -93,6 +86,12 @@ ros2 run explainable_ros explainability_client_node "What is happening?"
 ```
 
 ## Demo
+
+For the examples shown in this section we use the following models (available in llama_ros repository):
+
+- _Embbeding model_: bge-base-en-v1.5.yaml
+- _Reranker model_: jina-reranker
+- _Base model_: Qwen2
 
 First of all, download the [bags](https://doi.org/10.5281/zenodo.10518775). Then, launch the explainable_ros bringup:
 
