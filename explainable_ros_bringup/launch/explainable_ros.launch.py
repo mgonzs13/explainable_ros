@@ -1,18 +1,16 @@
 import os
 from launch import LaunchDescription
 from launch.actions import GroupAction
-from launch_ros.actions import Node, PushRosNamespace
+from launch_ros.actions import Node
 from llama_bringup.utils import create_llama_launch_from_yaml
 from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
     package_directory = get_package_share_directory("explainable_ros_bringup")
-    print(f"[Launch] Package directory resolved: {package_directory}")
 
     embbedings_model = GroupAction(
         [
-            PushRosNamespace("llama/embeddings"),
             create_llama_launch_from_yaml(
                 os.path.join(package_directory, "models", "bge-base-en-v1.5.yaml")
             ),
@@ -21,7 +19,6 @@ def generate_launch_description():
 
     reranker_model = GroupAction(
         [
-            PushRosNamespace("llama/reranker"),
             create_llama_launch_from_yaml(
                 os.path.join(package_directory, "models", "jina-reranker.yaml")
             ),
@@ -30,7 +27,6 @@ def generate_launch_description():
 
     base_model = GroupAction(
         [
-            PushRosNamespace("llama/base"),
             create_llama_launch_from_yaml(
                 os.path.join(package_directory, "models", "Qwen2.yaml")
             ),

@@ -1,23 +1,15 @@
 import time
-
 import rclpy
 from rclpy.node import Node
-from rclpy.executors import MultiThreadedExecutor
-from rclpy.callback_groups import ReentrantCallbackGroup
-
 from rcl_interfaces.msg import Log
 from explainable_ros_msgs.srv import Question
 
-
 from langchain_chroma import Chroma
-
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
-
 from langchain.retrievers import ContextualCompressionRetriever
-from langchain.schema import Document
 
 from llama_ros.langchain import ChatLlamaROS, LlamaROSEmbeddings, LlamaROSReranker
 
@@ -36,15 +28,12 @@ class ExplainabilityNode(Node):
         self.recent_msgs = []
         self.recent_msgs_conter = 0
 
-        ###ROS Topics and services
-
         # Create subscription for /rosout topic
         self.subscription = self.create_subscription(
             Log,
             "/rosout",
             self.listener_callback,
             1000,
-            callback_group=ReentrantCallbackGroup(),
         )
 
         # Create a ROS 2 Service to make question to de model
@@ -52,7 +41,6 @@ class ExplainabilityNode(Node):
             Question,
             "question",
             self.question_server_callback,
-            callback_group=ReentrantCallbackGroup(),
         )
 
         self.vector_db = Chroma(embedding_function=LlamaROSEmbeddings())
@@ -104,29 +92,29 @@ class ExplainabilityNode(Node):
         # For not considering llama_ros logs
         if log.name != "llama.llama_embedding_node":
             self.msg_queue.append(log)
-            print(f"Log {self.logs_number}: {log.msg}")
+            self.get_logger().info(f"Log {self.logs_number}: {log.msg}")
 
     def emb_cb(self) -> None:
 
         if self.msg_queue:
             log = self.msg_queue.pop(0)
-            start = time.time()
 
             # Eliminar solo el mensaje anterior
             if log.msg != self.previous_msg:
+                start = time.time()
+
                 msg_sec = log.stamp.sec
                 msg_nanosec = log.stamp.nanosec
                 unix_timestamp = msg_sec + msg_nanosec / 1e9
 
-                self.vector_db.add_texts([str(unix_timestamp) + " - " + log.msg])
+                self.vector_db.add_texts([f"{unix_timestamp} - {log.msg}"])
 
-                # self.vector_db.add_texts(texts=[str(unix_timestamp) + " - " + log.msg])
                 self.previous_msg = log.msg
                 self.embedding_number += 1
 
                 emb_time = time.time() - start
                 self.total_time += emb_time
-                print(
+                self.get_logger().info(
                     f"Time to create embedding {self.embedding_number}: {emb_time} | Total time: {self.total_time}"
                 )
 
@@ -151,10 +139,8 @@ class ExplainabilityNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    executor = MultiThreadedExecutor()
     node = ExplainabilityNode()
-    executor.add_node(node)
-    executor.spin()
+    rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
 

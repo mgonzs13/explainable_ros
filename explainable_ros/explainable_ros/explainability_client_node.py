@@ -8,7 +8,6 @@ class ExplainabilityClientNode(Node):
 
     def __init__(self) -> None:
         super().__init__("explainability_client_node")
-
         self.client = self.create_client(Question, "question")
 
     def sed_request(self, question_string: str) -> Question.Response:
@@ -25,10 +24,9 @@ class ExplainabilityClientNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-
     client_node = ExplainabilityClientNode()
     response = client_node.sed_request(sys.argv[1])
-    print(f"Response: {response.answer}")
+    client_node.get_logger().info(f"Response: {response.answer}")
     client_node.destroy_node()
     rclpy.shutdown()
 
