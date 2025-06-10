@@ -1,10 +1,10 @@
 from setuptools import find_packages, setup
 
-package_name = "topic_monitoring"
+package_name = "explainable_ros_demos"
 
 setup(
     name=package_name,
-    version="0.0.0",
+    version="0.5.0",
     packages=find_packages(exclude=["test"]),
     data_files=[
         ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
@@ -12,11 +12,13 @@ setup(
     ],
     install_requires=["setuptools"],
     zip_safe=True,
-    maintainer="dsobh",
-    maintainer_email="davidsobrin@gmail.com",
-    description="TODO: Package description",
-    license="TODO: License declaration",
+    maintainer="Miguel Ángel González Santamarta",
+    maintainer_email="mgons@unileon.es",
+    description="Explainability demos",
+    license="MIT",
     entry_points={
-        "console_scripts": ["monitoring_node = topic_monitoring.monitoring_node:main"],
+        "console_scripts": [
+            "explainable_demo_node = explainable_ros_demos.explainable_demo_node:main",
+        ],
     },
 )

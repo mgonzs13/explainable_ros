@@ -16,7 +16,6 @@ setup(
     maintainer_email="dsobh@unileon.es",
     description="Explainability tool for ROS2",
     license="MIT",
-    tests_require=["pytest"],
     entry_points={
         "console_scripts": [
             "explainability_node = explainable_ros.explainability_node:main",
