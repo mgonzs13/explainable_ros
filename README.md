@@ -29,8 +29,6 @@ On the other hand, the high-level representation of the components that make up 
 
 ## Installation
 
-### Prerequisites
-
 To run llama_ros with CUDA, first, you must install the [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit). Then, you can continue with the installation.
 
 ```shell
@@ -82,8 +80,6 @@ ros2 run explainable_ros explainability_client_node "What is happening?"
 ```
 
 ## Demos
-
-Take into account that the examples shown in the usage section have been made using this [rosbag](https://doi.org/10.5281/zenodo.10896141).
 
 ### LLM
 
@@ -145,9 +141,8 @@ If your work uses this repository, please, cite the repository or the following 
 
 ## Acknowledgments
 
-This project has been partially funded by the Recovery, Transformation, and Resilience Plan, financed by the European Union (Next Generation) thanks to the TESCAC project (Traceability and Explainability in Autonomous Cystems for improved Cybersecurity) granted by INCIBE to the University of León, and by grant PID2021-126592OB-C21 funded by
-MCIN/AEI/10.13039/501100011033 EDMAR (Explainable Decision Making in Autonomous Robots) project, PID2021-126592OB-C21 funded by MCIN/AEI/10.13039/501100011033 and by ERDF ”A way of making Europe”.
+This project has been partially funded by the Recovery, Transformation, and Resilience Plan, financed by the European Union (Next Generation) thanks to the TESCAC project (Traceability and Explainability in Autonomous Cystems for improved Cybersecurity) granted by INCIBE to the University of León, and by grant PID2021-126592OB-C21 funded by MCIN/AEI/10.13039/501100011033 EDMAR (Explainable Decision Making in Autonomous Robots) project, PID2021-126592OB-C21 funded by MCIN/AEI/10.13039/501100011033 and by ERDF ”A way of making Europe”.
 
-<img src="https://github.com/Dsobh/explainable_ROS/blob/main/images/logos/logo_demarce.png" width="150"/> <img src="https://github.com/Dsobh/explainable_ROS/blob/main/images/logos/logo_edmarce.png" width="140"/>
+<img src="./images/logos/logo_demarce.png" width="150"/> <img src="./images/logos/logo_edmarce.png" width="140"/>
 
-<img src="https://github.com/Dsobh/explainable_ROS/blob/main/images/logos/BandaLogos_INCIBE_page-0001.jpg" width="2000"/>
+<img src="./images/logos/BandaLogos_INCIBE_page-0001.jpg" width="2000"/>
