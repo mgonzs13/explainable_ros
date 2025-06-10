@@ -51,10 +51,10 @@ class ExplainabilityNode(Node):
         prompt = ChatPromptTemplate.from_messages(
             [
                 SystemMessage(
-                    "You are an explainability AI tool for ROS 2 mobile robots. Your goal is to detect possible obstacles. You have to comparing obstacle detected logs with image-to-text logs. You have to interpret the robot's data.\n\n"
+                    "You are an explainability AI tool for ROS 2 mobile robots. Your goal is to interpret the robot's data and answer questions."
                 ),
                 HumanMessagePromptTemplate.from_template(
-                    "Taking into account the following logs:\n{context}\n\n{question}"
+                    "Taking into account the following logs:\n{context}\nAnswer the following question: {question}"
                 ),
             ]
         )
