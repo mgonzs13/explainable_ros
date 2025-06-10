@@ -54,12 +54,12 @@ class ExplainabilityNode(Node):
                     "You are an explainability AI tool for ROS 2 mobile robots. Your goal is to detect possible obstacles. You have to comparing obstacle detected logs with image-to-text logs. You have to interpret the robot's data.\n\n"
                 ),
                 HumanMessagePromptTemplate.from_template(
-                    "Taking into account the following logs:{context}\n\n{question}"
+                    "Taking into account the following logs:\n{context}\n\n{question}"
                 ),
             ]
         )
 
-        compressor = LlamaROSReranker(top_n=5)
+        compressor = LlamaROSReranker(top_n=10)
         compression_retriever = ContextualCompressionRetriever(
             base_compressor=compressor, base_retriever=self.retriever
         )
@@ -69,7 +69,7 @@ class ExplainabilityNode(Node):
             sortered_list = self.order_retrievals(documents)
 
             for l in sortered_list:
-                logs += l
+                logs += f"\t{l}"
 
             return logs
 
