@@ -26,7 +26,7 @@ def main(args=None):
     rclpy.init(args=args)
     client_node = ExplainabilityClientNode()
     response = client_node.sed_request(sys.argv[1])
-    client_node.get_logger().info(f"Response: {response.answer}")
+    print(f"Response: {response.answer}")
     client_node.destroy_node()
     rclpy.shutdown()
 

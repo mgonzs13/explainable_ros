@@ -89,6 +89,10 @@ class ExplainabilityNode(Node):
     def listener_callback(self, log: Log) -> None:
         self.logs_number += 1
 
+        if log.name == self.get_logger().name:
+            # Avoiding the node's own logs
+            return
+
         # For not considering llama_ros logs
         if log.name != "llama.llama_embedding_node":
             self.msg_queue.append(log)
