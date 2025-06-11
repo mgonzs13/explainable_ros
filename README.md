@@ -83,11 +83,11 @@ ros2 run explainable_ros explainability_client_node "What is happening?"
 
 ### LLM
 
-For the examples shown in this section we use the following models (available in llama_ros repository):
+For the examples shown in this section we use the following models:
 
-- _Embbeding model_: bge-base-en-v1.5.yaml
-- _Reranker model_: jina-reranker
-- _Base model_: Qwen2
+- Embbeding model: **bge-base-en-v1.5**
+- Reranker model: **jina-reranker**
+- Base model: **Qwen2.5-Coder-7B-Instruct**
 
 First of all, download the [bags](https://doi.org/10.5281/zenodo.10518775). Then, launch the explainable_ros bringup:
 
@@ -209,6 +209,35 @@ Here you have the results for each bag using specific questions from demo.
 | Did the robot avoid any obstacle during the navigation?                 | Based on the logs provided, it appears that the robot did not avoid any obstacle during the navigation to waypoint with ID: 9. The logs indicate that the robot detected obstacles multiple times, with the distance to the obstacle increasing from 4.11 meters to 16.83 meters in some cases. Additionally, the logs show that the robot was actively passing new paths to the controller in response to the obstacles, but it did not successfully navigate around them. The final log entry indicates that the goal was canceled and the robot stopped, suggesting that it was unable to reach the waypoint due to the obstacles.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 </details>
+
+### VLM
+
+For the examples shown in this section we use the following models:
+
+- Embbeding model: **bge-base-en-v1.5**
+- Reranker model: **jina-reranker**
+- Base model: **Qwen2.5-Coder-7B-Instruct**
+- VLM model: **...**
+
+First of all, download the [bags](https://doi.org/10.5281/zenodo.10896141). Then, launch the explainable_ros bringup:
+
+```shell
+ros2 launch explainable_ros_bringup explainable_ros.launch.py use_vlm:=True
+```
+
+Then, play one of the bags, for example, bag 4:
+
+```shell
+ros2 bag play ....
+```
+
+Finally, wait till all logs are processed and stored and you can ask questions:
+
+```shell
+ros2 run explainable_ros_demos explainable_vlm_demo_node
+```
+
+#### Results
 
 ## Related Works
 
