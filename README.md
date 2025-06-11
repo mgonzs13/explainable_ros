@@ -217,8 +217,7 @@ For the examples shown in this section we use the following models:
 
 - Embbeding model: **bge-base-en-v1.5**
 - Reranker model: **jina-reranker**
-- Base model: **Qwen2.5-Coder-7B-Instruct**
-- VLM model: **SpaceOm**
+- Base model: **Qwen2.5-VL-7B**
 
 First of all, download the [bags](https://doi.org/10.5281/zenodo.10896141). Then, launch the explainable_ros bringup:
 
@@ -243,9 +242,9 @@ ros2 run explainable_ros_demos vlm_explainable_demo_node
 <details>
 <summary>Click to expand</summary>
 
-| **User Question**                                                                 | **LLM Answer**                                                                                                                                               |
-| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Did the robot encounter any obstacles during navigation? What type of obstacleis? | Yes, the robot encountered obstacles during navigation. The type of obstacles detected are narrow, vertical metal bars and a vertical metal pole or barrier. |
+| **User Question**                                                                 | **LLM Answer**                                                                                                                                                                                                                                                                                                             |
+| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Did the robot encounter any obstacles during navigation? What type of obstacleis? | Yes, the robot encountered an obstacle during navigation. The type of obstacle is a blue leg or part of a leg, which is in close proximity to a wall. The obstacle appears to be in the process of moving or interacting with the wall, suggesting it might be an obstacle for the robot if it were to navigate this area. |
 
 </details>
 
