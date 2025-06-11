@@ -28,23 +28,8 @@ class ExplainabilityNode(Node):
         self.recent_msgs = []
         self.recent_msgs_conter = 0
 
-        # Create subscription for /rosout topic
-        self.subscription = self.create_subscription(
-            Log,
-            "/rosout",
-            self.listener_callback,
-            1000,
-        )
-
-        # Create a ROS 2 Service to make question to de model
-        self.srv = self.create_service(
-            Question,
-            "question",
-            self.question_server_callback,
-        )
-
+        # Create vector database and retriever
         self.vector_db = Chroma(embedding_function=LlamaROSEmbeddings())
-
         self.retriever = self.vector_db.as_retriever(search_kwargs={"k": 20})
 
         # Create prompt
@@ -84,6 +69,21 @@ class ExplainabilityNode(Node):
             | StrOutputParser()
         )
 
+        # Create subscription for /rosout topic
+        self.subscription = self.create_subscription(
+            Log,
+            "/rosout",
+            self.listener_callback,
+            1000,
+        )
+
+        # Create a ROS 2 Service to make question to de model
+        self.srv = self.create_service(
+            Question,
+            "question",
+            self.question_server_callback,
+        )
+
         self.emb_timer = self.create_timer(0.001, self.emb_cb)
 
     def listener_callback(self, log: Log) -> None:
@@ -94,9 +94,12 @@ class ExplainabilityNode(Node):
             return
 
         # For not considering llama_ros logs
-        if log.name != "llama.llama_embedding_node":
-            self.msg_queue.append(log)
-            self.get_logger().info(f"Log {self.logs_number}: {log.msg}")
+        if "llama" in log.name and "llava" not in log.name:
+            return
+
+        # Save logs
+        self.msg_queue.append(log)
+        self.get_logger().info(f"Log {self.logs_number}: {log.msg}")
 
     def emb_cb(self) -> None:
 

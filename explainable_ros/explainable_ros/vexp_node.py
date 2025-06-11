@@ -1,34 +1,30 @@
 import math
-
 import rclpy
-from simple_node import Node
 import message_filters
-
-from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
-from sensor_msgs.msg import Image
+from simple_node import Node
 from nav_msgs.msg import Path
-from llama_msgs.action import GenerateResponse
+from sensor_msgs.msg import Image
+from llama_msgs.action import GenerateChatCompletions
+from llama_msgs.msg import ChatMessage
+from llama_ros.llama_client_node import LlamaClientNode
 
 
 class VisualExplainabilityNode(Node):
     def __init__(self):
         super().__init__("vexp_node")
 
-        self._action_client = self.create_action_client(
-            GenerateResponse, "/llava/generate_response"
-        )
+        self._llama_client = LlamaClientNode.get_instance()
 
         self.previous_distance = float("inf")
-        self.distance_threshold = 5
-
-        qos_profile = QoSProfile(
-            reliability=ReliabilityPolicy.BEST_EFFORT,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=10,
+        self.declare_parameter("distance_threshold", 5.0)
+        self.distance_threshold = (
+            self.get_parameter("distance_threshold").get_parameter_value().double_value
         )
 
         # subscribers
-        camera_sub = message_filters.Subscriber(self, Image, "/camera", qos_profile=10)
+        camera_sub = message_filters.Subscriber(
+            self, Image, "/camera/image_raw", qos_profile=10
+        )
         plan_sub = message_filters.Subscriber(self, Path, "/plan", qos_profile=10)
 
         self._synchronizer = message_filters.ApproximateTimeSynchronizer(
@@ -50,8 +46,8 @@ class VisualExplainabilityNode(Node):
             total_distance += distance
 
         if (
-            self.previous_distance != 0
-            and total_distance > self.previous_distance * self.distance_threshold
+            self.previous_distance > 0
+            and abs(self.previous_distance - total_distance) > self.distance_threshold
         ):
             self.get_logger().info(
                 "Possible obstacle detected: Distance to the goal increase from {:.2f} meters to {:.2f} meters".format(
@@ -60,19 +56,25 @@ class VisualExplainabilityNode(Node):
             )
 
             # VLM Code for Image-To-Text
-            goal = GenerateResponse.Goal()
-            goal.prompt = "What is in the center of the image?"
-            goal.image = data
-            goal.sampling_config.temp = 0.0
-            goal.reset = True
+            goal = GenerateChatCompletions.Goal()
+            goal.messages = [
+                ChatMessage(
+                    role="system",
+                    content="You are an AI assistant for a mobile robot. Your task is to analyze the camera data and provide information about obstacles in the environment.",
+                ),
+                ChatMessage(
+                    role="user",
+                    content="<__image__>Is there any obstacle in the image? If yes, describe it.",
+                ),
+            ]
+            goal.images.append(data)
+            goal.sampling_config.temp = 0.2
+            goal.add_generation_prompt = True
 
-            self._action_client.wait_for_server()
-            self._action_client.send_goal(goal)
-            self._action_client.wait_for_result()
-            result: GenerateResponse.Result = self._action_client.get_result()
+            result, status = self._llama_client.generate_chat_completions(goal)
 
             self.get_logger().info(
-                f"Camera Log for obstacle detection: {result.response.text}"
+                f"Obstacle detection in camera: {result.choices[0].message.content}"
             )
 
         self.previous_distance = total_distance

@@ -20,6 +20,7 @@ On the other hand, the high-level representation of the components that make up 
 2. [Usage](#usage)
 3. [Demos](#demos)
    - [LLM](#llm)
+   - [VLM](#vlm)
 4. [Related Works](#related-works)
    - [Other Software Projects](#other-software-projects)
    - [Related Datasets](#related-datasets)
@@ -217,27 +218,36 @@ For the examples shown in this section we use the following models:
 - Embbeding model: **bge-base-en-v1.5**
 - Reranker model: **jina-reranker**
 - Base model: **Qwen2.5-Coder-7B-Instruct**
-- VLM model: **...**
+- VLM model: **SpaceOm**
 
 First of all, download the [bags](https://doi.org/10.5281/zenodo.10896141). Then, launch the explainable_ros bringup:
 
 ```shell
-ros2 launch explainable_ros_bringup explainable_ros.launch.py use_vlm:=True
+ros2 launch explainable_ros_bringup vlm_explainable_ros.launch.py
 ```
 
 Then, play one of the bags, for example, bag 4:
 
 ```shell
-ros2 bag play ....
+ros2 bag play Rosbag-VLM-Explainability
 ```
 
 Finally, wait till all logs are processed and stored and you can ask questions:
 
 ```shell
-ros2 run explainable_ros_demos explainable_vlm_demo_node
+ros2 run explainable_ros_demos vlm_explainable_demo_node
 ```
 
 #### Results
+
+<details>
+<summary>Click to expand</summary>
+
+| **User Question**                                                                 | **LLM Answer**                                                                                                                                               |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Did the robot encounter any obstacles during navigation? What type of obstacleis? | Yes, the robot encountered obstacles during navigation. The type of obstacles detected are narrow, vertical metal bars and a vertical metal pole or barrier. |
+
+</details>
 
 ## Related Works
 

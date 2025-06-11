@@ -36,7 +36,7 @@ def generate_launch_description():
     explainability_node_cmd = Node(
         package="explainable_ros",
         executable="explainability_node",
-        name="explainability_node_main",
+        name="explainability_node",
         output="screen",
     )
 
