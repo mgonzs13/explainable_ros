@@ -242,9 +242,9 @@ ros2 run explainable_ros_demos vlm_explainable_demo_node
 <details>
 <summary>Click to expand</summary>
 
-| **User Question**                                                                 | **LLM Answer**                                                                                                                                                                                                                                                                                                             |
-| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Did the robot encounter any obstacles during navigation? What type of obstacleis? | Yes, the robot encountered an obstacle during navigation. The type of obstacle is a blue leg or part of a leg, which is in close proximity to a wall. The obstacle appears to be in the process of moving or interacting with the wall, suggesting it might be an obstacle for the robot if it were to navigate this area. |
+| **User Question**                                                                | **LLM Answer**                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Did the robot encounter any obstacles during navigation? What type of obstacles? | Based on the logs provided, the robot encountered an obstacle during navigation. The type of obstacle detected is a blue leg or part of a leg, which is positioned very close to the wall. This obstacle is in the foreground and appears to be in the way of the robot's path. The robot's path was adjusted to avoid this obstacle, as indicated by the change in the distance to the goal from 2.92 meters to 15.27 meters. |
 
 </details>
 
@@ -267,9 +267,19 @@ A series of rosbags (ROS 2 Humble) published in Zenodo are listed below. This da
 - Sobrín-Hidalgo, D., González-Santamarta, M. A., Guerrero-Higueras, Á. M., Rodríguez-Lera, F. J., & Matellán-Olivera, V. (2024). [Explaining Autonomy: Enhancing Human-Robot Interaction through Explanation Generation with Large Language Models](https://arxiv.org/abs/2402.04206). arXiv preprint arXiv:2402.04206.
 - Sobrín-Hidalgo, D., González-Santamarta, M. Á., Guerrero-Higueras, Á. M., Rodríguez-Lera, F. J., & Matellán-Olivera, V. (2024). [Enhancing Robot Explanation Capabilities through Vision-Language Models: a Preliminary Study by Interpreting Visual Inputs for Improved Human-Robot Interaction](https://arxiv.org/abs/2404.09705). arXiv preprint arXiv:2404.09705.
 
-## Cite
+## Cites
 
-If your work uses this repository, please, cite the repository or the following paper:
+```
+@misc{sobrínhidalgo2024enhancingrobotexplanationcapabilities,
+      title={Enhancing Robot Explanation Capabilities through Vision-Language Models: a Preliminary Study by Interpreting Visual Inputs for Improved Human-Robot Interaction},
+      author={David Sobrín-Hidalgo and Miguel Ángel González-Santamarta and Ángel Manuel Guerrero-Higueras and Francisco Javier Rodríguez-Lera and Vicente Matellán-Olivera},
+      year={2024},
+      eprint={2404.09705},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2404.09705},
+}
+```
 
 ```
 @article{sobrin2024explaining,

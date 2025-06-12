@@ -94,7 +94,7 @@ class ExplainabilityNode(Node):
             return
 
         # For not considering llama_ros logs
-        if "llama" in log.name and "llava" not in log.name:
+        if "llama" in log.name:
             return
 
         # Save logs
