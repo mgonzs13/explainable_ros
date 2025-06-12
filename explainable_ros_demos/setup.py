@@ -19,7 +19,7 @@ setup(
     entry_points={
         "console_scripts": [
             "explainable_demo_node = explainable_ros_demos.explainable_demo_node:main",
-            "vlm_explainable_demo_node = vlm_explainable_ros_demos.explainable_demo_node:main",
+            "vlm_explainable_demo_node = explainable_ros_demos.vlm_explainable_demo_node:main",
         ],
     },
 )

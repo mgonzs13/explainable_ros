@@ -68,10 +68,10 @@ class VisualExplainabilityNode(Node):
                 ),
             ]
             goal.images.append(data)
-            goal.sampling_config.temp = 0.2
+            goal.sampling_config.temp = 0.0
             goal.add_generation_prompt = True
 
-            result, status = self._llama_client.generate_chat_completions(goal)
+            result, _ = self._llama_client.generate_chat_completions(goal)
 
             self.get_logger().info(
                 f"Obstacle detection in camera: {result.choices[0].message.content}"

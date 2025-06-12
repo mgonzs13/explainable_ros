@@ -7,7 +7,7 @@ def main(args=None):
     client_node = ExplainabilityClientNode()
 
     questions = [
-        "Did the robot encounter any obstacles during navigation? What type of obstacleis.?"
+        "Did the robot encounter any obstacles during navigation? What type of obstacles?"
     ]
 
     markdown_table = """
